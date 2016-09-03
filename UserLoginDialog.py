@@ -10,8 +10,8 @@ class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
         super(UserLoginDialog, self).__init__(parent)
         self.setupUi(self)
         self.LoginOKButton.setEnabled(False)
-        self.LoginOKButton.setFocusPolicy(Qt.NoFocus)
         self.LoginCancelButton.setFocusPolicy(Qt.NoFocus)
+        self.registerButton.setFocusPolicy(Qt.NoFocus)
         self.setWindowTitle('Login')
         self.updateUi()
 
@@ -27,11 +27,16 @@ class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
        self.accept()
 
     def updateUi(self):
+        """
+        判断是否输入为空
+        :return:
+        """
         enable = (not self.userNameLogin.text() == '') and (not
                                                               self.userPasswordLogin.text() == '')
         self.LoginOKButton.setEnabled(enable)
 
     def ChargeLogin(self):
+        #TODO 进行登陆判断
         return True
 
     def on_registerButton_clicked(self):

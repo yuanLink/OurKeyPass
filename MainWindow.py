@@ -9,6 +9,11 @@ class MainWindow(QMainWindow, ui_MainWindow.Ui_MainWindow):
         self.setWindowTitle('OurKeyPass')
 
     def on_AddButton_clicked(self):
-        self.NewFile = NewFileDialog.NewFileDialog(mainWindow = self)
+        self.NewFile = NewFileDialog.NewFileDialog(mainWindow=self)
         self.NewFile.show()
-
+    def UpdateUi(self):
+        #TODO
+        """
+        此处用于读取文件并且更新listwidget中显示的数据
+        :return:
+        """

@@ -65,7 +65,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="userMemorandumList"/>
+        <widget class="QListWidget" name="userRemarkList"/>
        </item>
       </layout>
      </item>
