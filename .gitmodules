@@ -1,0 +1,3 @@
+[submodule "pinyin.py"]
+	path = refs/pinyin
+	url = https://github.com/cleverdeng/pinyin.py.git
