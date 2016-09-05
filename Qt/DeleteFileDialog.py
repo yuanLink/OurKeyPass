@@ -24,11 +24,11 @@ class DeleteFileDialog(QDialog, ui_DeleteDialog.Ui_DeleteDialog):
                                                                self.DeleteUserPasswordEdit.text() == '')
         self.DeleteOKButton.setEnabled(enable)
     def on_DeleteOKButton_clicked(self):
-        if(self.CheckSave()):
+        if(self.CheckLoad()):
             self.mainWindow
             self.CheckCount = False
             self.accept()
-    def CheckSave(self):
+    def CheckLoad(self):
         #TODO
         """"
             此处是向文件搜索对应的用户名和密码，如果存在并且删除成功，则将self.CheckCount的值设为True
