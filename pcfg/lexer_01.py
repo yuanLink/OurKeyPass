@@ -4,6 +4,7 @@ import bz2
 
 from lexer_helper import ParseTree, Date, RuleSet
 from dawg import IntDAWG, DAWG
+from honeyvault_config import GRAMMAR_PATH
 # !!ParseTree:语法树类，用于解析语法，并且存储语法：
 # Date:日期类，在解读数字结构的时候使用
 # KEyboard:键盘类，在解读接盘结构时候使用
@@ -117,8 +118,8 @@ class NonT_L(NonT):  # 特别注意 :这个类的作用是对NonT_W的概率进�
 
 class NonT_W(NonT):
     sym, prod, prob = 'W', '', 0.0
-    english_dawg = IntDAWG().load('words.dawg')
-    chinese_dawg = IntDAWG().load('pinyin.dawg')
+    english_dawg = IntDAWG().load(GRAMMAR_PATH + 'words.dawg')
+    chinese_dawg = IntDAWG().load(GRAMMAR_PATH + 'pinyin.dawg')
     total_f = english_dawg[u"__total__"] + chinese_dawg[u'__total__']
     # thisdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # word_dawg  = IntDAWG().load('{}/data/English_30000.dawg'.format(thisdir))
@@ -381,7 +382,7 @@ def parse(passwd):
 
             # 记录下此时的最可能的规则
             nonTRule[(start, start+rep)] = max(temp,
-                                               key=;ambda k:k.probability())
+                                               key=lambda k:k.probability())
 
     # for each in nonTRule:
     #   print(nonTRule[each])

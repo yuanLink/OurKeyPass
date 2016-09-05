@@ -1,0 +1,4 @@
+Crypto==1.4.1
+DAWG==0.7.8
+numpy==1.11.1+mkl
+scipy==0.18.0
