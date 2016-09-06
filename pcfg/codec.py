@@ -171,4 +171,6 @@ if __name__ == '__main__':
 
     key = '1234567890abcdef'
     g = PcfgEncode(key)
-    print(g.pcfg_decode(g.pcfg_encode('password')))
+    t = g.pcfg_encode('password')
+    g = PcfgEncode('1234567890bbcdef')
+    print(g.pcfg_decode(t))
