@@ -2,8 +2,10 @@
 
 import unittest
 import os,sys
-sys.path.append(os.path.abspath(os.path.pardir))
+# sys.path.append(os.path.abspath(os.path.pardir))
+# print(sys.path)
 from pcfg import codec
+from codec import PcfgEncode
 
 
 class TestCodec(unittest.TestCase):
@@ -18,19 +20,19 @@ class TestCodec(unittest.TestCase):
         pass
 
     def test_encode(self):
-        code = codec.encode(self.number)
+        code = PcfgEncode.encode(self.number)
         self.assertEqual(code, self.code)
 
     def test_decode(self):
-        number = codec.decode(self.code)
+        number = PcfgEncode.decode(self.code)
         self.assertEqual(number, self.number)
 
     def test_dte_encode(self):
-        num_encode = codec.DTE_AES_encode(self.aes_decode, self.key)
+        num_encode = PcfgEncode.DTE_AES_encode(self.aes_decode, self.key)
         self.assertEqual(num_encode, self.aes_encode)
 
     def test_dte_decode(self):
-        num_deocde = codec.DTE_AES_decode(self.aes_encode, self.key)
+        num_deocde = PcfgEncode.DTE_AES_decode(self.aes_encode, self.key)
         self.assertEqual(num_deocde, self.aes_decode)        
 
 if __name__ == '__main__':

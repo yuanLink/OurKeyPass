@@ -89,7 +89,7 @@ def open_(filename, mode='rt',type_ = 'bz2'):
         f = tarfile.open(filename, mode)
     else:
         f = open(filename, mode);
-    return f;
+    return f
 
 
 def get_line(file_object, lim=-1):
@@ -108,11 +108,13 @@ def get_line(file_object, lim=-1):
 
 def print_err( *args ):
     if DEBUG == True:
-        sys.stderr.write(' '.join([str(a) for a in args])+'\n')
+        sys.stderr.write(
+            ' '.join([str(a) for a in args])+'\n')
 
 def print_production( *args ):
     if PRODUCTION == True:
-        sys.stderr.write(' '.join([str(a) for a in args])+'\n')
+        sys.stderr.write(
+            ' '.join([str(a) for a in args])+'\n')
 
 printed_once_dict={}
 def print_once( *args ):

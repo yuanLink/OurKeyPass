@@ -51,7 +51,7 @@ class NonT(object):  # baseclass
 
     def parse_tree(self):
         p_tree = ParseTree()
-        if isinstance(self.prod, basestring): # 单纯字符串则返回字符串，这里其实可以看成只有一个根节点的语法树
+        if isinstance(self.prod, str): # 单纯字符串则返回字符串，这里其实可以看成只有一个根节点的语法树
             return self.prod
         elif isinstance(self.prod, list):     # 是一个list，则将list中的每一个读出，添加后生成成一棵语法树
             for p in self.prod:
@@ -95,21 +95,21 @@ class NonT_L(NonT):  # 特别注意 :这个类的作用是对NonT_W的概率进�
             # print("sucess") 测试用代码 T_T
         else:
             self.prob = 1.0
-    # def parse_tree(self):
-    #     p_tree = ParseTree()
-    #     p_tree.add_rule(('L', self.prod))
-    #     L = ['L_%s' % c for c in self.l]
-    #     if self.prod == 'l33t':
-    #         p_tree.add_rule(('l33t', zip(L, self.r)))
-    #     return p_tree
+    def parse_tree(self):
+        p_tree = ParseTree()
+        p_tree.add_rule(('L', self.prod))
+        L = ['L_%s' % c for c in self.l]
+        if self.prod == 'l33t':
+            p_tree.add_rule(('l33t', zip(L, self.r)))
+        return p_tree
 
-    # def rule_set(self):
-    #     rs = RuleSet()
-    #     rs.add_rule('L', self.prod)
-    #     if self.prod is 'l33t':
-    #         for c,d in zip(self.l, self.r):
-    #             rs.add_rule('L_%s'%c,d)
-    #     return rs
+    def rule_set(self):
+        rs = RuleSet()
+        rs.add_rule('L', self.prod)
+        if self.prod is 'l33t':
+            for c,d in zip(self.l, self.r):
+                rs.add_rule('L_%s'%c,d)
+        return rs
 
     def __str__(self):
         return "NonT_L: ({}, {})".format(self.l, self.r)
@@ -134,6 +134,7 @@ class NonT_W(NonT):
             '3': 'e', '4': 'a', '@': 'a',
             '$': 's', '0': 'o', '1': 'i',
             'z': 's'
+
             })
 
     def __init__(self, word):
@@ -430,4 +431,4 @@ def buildOurpcfg(filename):
 
 if __name__ == "__main__":
 
-    print(parse("Pass"))
+    print(parse("passabcd"))

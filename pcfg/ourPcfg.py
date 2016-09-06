@@ -1,11 +1,11 @@
 #   -*-coding:utf-8 -*-
 
 
-#   Author:Link
+author = 'Link'
 
-PASSWORD_MAX_LENGTH = 32
-
-import re,bz2,json
+import re
+import bz2
+import json
 from collections import OrderedDict
 from dawg import IntDAWG,DAWG
 from helper import open_,convert2group,whatchar,print_once,bin_search
@@ -13,6 +13,12 @@ from lexer_helper import Date,ParseTree
 from lexer_01 import NonT_L, get_nont_class
 from honeyvault_config import RULE_PATH
 import random 
+
+
+PASSWORD_MAX_LENGTH = 32
+
+
+class Grammer(object):
 # """
 # 功能：处理pcfg加密和解密的类
 # 属性：
@@ -23,7 +29,6 @@ import random
 # parse：分析密码的组成内容s
 # """
 
-class Grammer(object):
     G = ''
     l33t_replaces = DAWG.compile_replaces({
             '3':'e', '4':'a', '@':'a',
@@ -254,7 +259,7 @@ class Grammer(object):
                 pt.add_rule(ltree[0])
                 # 假如此时为’133t'规则的话，此时在'133t'之后会记录下此时可能发生替换的元素，则要把这些元素也放入(这些元素已经打包好了)
                 if len(ltree)>1:
-                    pt.tree.extend(L_parse_tree[1][1])
+                    pt.tree.extend(ltree[1][1])
             # 假如规则是T的话，那么肯定是('T',[('T_Y','1993')..]..)之类的
             elif sym.startswith('T'):
                 # 为了与cfg文件内部保持一致，我们此时需要把文件转换成与cfg内的文件一致的格式
@@ -281,7 +286,7 @@ class Grammer(object):
             print("encode failed,change")
         # 然后将这个密码树映射到不同的数字中：
         encd = []
-        print(ptree)
+        # print(ptree)
         for each_node in ptree:
             try:
                 encd.append(self.encode_encd(*each_node))
