@@ -123,18 +123,19 @@ class PcfgEncode(object):
         如果发生错误，会返回一个空的列表
         """
 
-        if len(key)>32:
+        if len(password)>32 or len(password)<=5:
+            print("password length is %d"%len(password))
             return []
 
-        key.zfill(32)
+        self.key = self.key.zfill(32)
 
-
+        # print("in the pcfg_encode,the password is "+password)
         # 对密码进行pcfg混淆        
         temp_list= self.g.encode_password(password)
         # print(temp_list)
         # 然后对整个list进行处理
         encode_list = [self.encode(x) for x in temp_list]
-
+        # print(encode_list)
         return [self.DTE_AES_encode(x) for x in encode_list]
 
 
@@ -151,14 +152,15 @@ class PcfgEncode(object):
         如果发生错误，会返回一个空的字符串
         """
 
-        if len(key)>32:
+        if len(self.key)>32:
             return ''
 
-        key.zfill(0)
+        self.key = self.key.zfill(32)
 
         # 将列表解码
-        # for x in passwd_list:
-        #     print(self.decode(self.DTE_AES_decode(x)))
+        for x in passwd_list:
+            print(x)
+            print(self.decode(self.DTE_AES_decode(x)))
         
         temp_list = [self.decode(self.DTE_AES_decode(x)) for x in passwd_list]
         # 传入列表，进行返混淆

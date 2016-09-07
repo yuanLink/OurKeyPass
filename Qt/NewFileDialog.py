@@ -1,10 +1,12 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 import ui_NewFileDialog
 import MainWindow
 
+
 class NewFileDialog(QDialog, ui_NewFileDialog.Ui_new_file_dialog):
-    def __init__(self, parent=None, mainWindow=MainWindow, sql):
+    def __init__(self, parent=None, mainWindow=MainWindow, sql = ''):
         super(NewFileDialog, self).__init__(parent)
         self.setupUi(self)
         self.mainWindow = mainWindow
@@ -29,11 +31,15 @@ class NewFileDialog(QDialog, ui_NewFileDialog.Ui_new_file_dialog):
      # 添加用户名和密码
     def on_NewFileOKButton_clicked(self):
         if(self.CheckSave()):
+            passwd = self.userPasswordInput.text()
+            self.sql.insert(self.userNameInput.text(), passwd, self.userRemarkInput.text())
+
             self.mainWindow.userNameList.addItem(self.userNameInput.text())
             self.mainWindow.userPasswordList.addItem(self.userPasswordInput.text())
             self.mainWindow.userRemarkList.addItem(self.userRemarkInput.text())
             self.CheckCount = False
-            self.sql.insert(self.userNameInput.text(), self.userPasswordInput.text(), self.userRemarkInput.text())
+
+            
             self.accept()
 
 

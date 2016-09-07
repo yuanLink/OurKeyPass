@@ -1,8 +1,10 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 import ui_UserLoginDialog
 from MainWindow import MainWindow
 import sys
+import sql_handle
 
 
 class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
@@ -22,9 +24,12 @@ class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
         self.updateUi()
 
     def on_LoginOKButton_clicked(self):
-       self.mainWindow = MainWindow()
-       self.mainWindow.show()
-       self.accept()
+        name = self.userNameLogin.text()
+        passwd = self.userPasswordLogin.text()
+        self.sql_handle = sql_handle.SqlHandle(name, key = passwd)
+        self.mainWindow = MainWindow(table_name = name, password = passwd, sql = self.sql_handle)
+        self.mainWindow.show()
+        self.accept()
 
     def updateUi(self):
         """

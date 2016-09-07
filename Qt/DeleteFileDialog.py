@@ -1,10 +1,12 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 import ui_DeleteDialog
 import MainWindow
+import sql_handle
 
 class DeleteFileDialog(QDialog, ui_DeleteDialog.Ui_DeleteDialog):
-    def __init__(self, parent=None ,mainWindow=MainWindow):
+    def __init__(self, parent=None ,mainWindow=MainWindow, sql = ''):
         super(DeleteFileDialog, self).__init__(parent)
         self.setupUi(self)
         self.mainWindow = mainWindow

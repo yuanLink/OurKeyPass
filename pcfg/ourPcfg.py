@@ -1,7 +1,7 @@
 #   -*-coding:utf-8 -*-
 
 
-author = 'Link'
+__author__ = 'Link'
 
 import re
 import bz2

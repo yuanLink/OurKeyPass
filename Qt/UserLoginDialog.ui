@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>60</x>
@@ -58,7 +58,7 @@
                <string>用户名</string>
               </property>
               <property name="buddy">
-               <cstring>user_name_login</cstring>
+               <cstring>userNameLogin</cstring>
               </property>
              </widget>
             </item>
@@ -75,7 +75,7 @@
                <string>密码  </string>
               </property>
               <property name="buddy">
-               <cstring>user_password_login</cstring>
+               <cstring>userPasswordLogin</cstring>
               </property>
              </widget>
             </item>
@@ -125,15 +125,6 @@
     </item>
    </layout>
   </widget>
-  <zorder>registerButton</zorder>
-  <zorder>label_4</zorder>
-  <zorder>userNameLogin</zorder>
-  <zorder>label_3</zorder>
-  <zorder>userPasswordLogin</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder></zorder>
  </widget>
  <resources/>
  <connections>
