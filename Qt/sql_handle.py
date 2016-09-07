@@ -90,9 +90,13 @@ class SqlHandle(object):
 # 删除
     def delete(self, username):
         self.cursor = self.pw_db.cursor()
-        self.cursor.execute(\
-            'DELETE FROM %s WHERE username = ?' %table_name,\
-            (username,))
+        try:
+        	self.cursor.execute(\
+            	'DELETE FROM %s WHERE username = ?' %self.table_name,\
+            	(username,))
+        except sqlite3.OperationalError as ope:
+        	print("the username %s is not existed!"%username)
+
         self.cursor.close()
         self.pw_db.commit()
 

@@ -158,9 +158,9 @@ class PcfgEncode(object):
         self.key = self.key.zfill(32)
 
         # 将列表解码
-        for x in passwd_list:
-            print(x)
-            print(self.decode(self.DTE_AES_decode(x)))
+        # for x in passwd_list:
+        #     print(x)
+        #     print(self.decode(self.DTE_AES_decode(x)))
         
         temp_list = [self.decode(self.DTE_AES_decode(x)) for x in passwd_list]
         # 传入列表，进行返混淆

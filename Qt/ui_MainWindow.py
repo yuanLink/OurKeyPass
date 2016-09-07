@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 27))
         self.menubar.setObjectName("menubar")
         self.menuDasd = QtWidgets.QMenu(self.menubar)
         self.menuDasd.setObjectName("menuDasd")
@@ -123,9 +123,13 @@ class Ui_MainWindow(object):
         self.menuDasd.addSeparator()
         self.menuDasd.addAction(self.actionExit)
         self.menubar.addAction(self.menuDasd.menuAction())
+        self.label.setBuddy(self.userNameList)
 
         self.retranslateUi(MainWindow)
         self.actionExit.triggered.connect(MainWindow.close)
+        self.userNameList.itemSelectionChanged.connect(MainWindow.clickedTheUserNameListItem)
+        self.userPasswordList.itemSelectionChanged.connect(MainWindow.clickedThePasswordListItem)
+        self.userRemarkList.itemSelectionChanged.connect(MainWindow.clickedTheRemarkListItem)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

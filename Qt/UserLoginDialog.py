@@ -29,7 +29,8 @@ class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
         self.sql_handle = sql_handle.SqlHandle(name, key = passwd)
         self.mainWindow = MainWindow(table_name = name, password = passwd, sql = self.sql_handle)
         self.mainWindow.show()
-        self.accept()
+        # self.accept()
+        self.close()
 
     def updateUi(self):
         """

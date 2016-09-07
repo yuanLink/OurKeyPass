@@ -27,6 +27,8 @@ class DeleteFileDialog(QDialog, ui_DeleteDialog.Ui_DeleteDialog):
         self.DeleteOKButton.setEnabled(enable)
     def on_DeleteOKButton_clicked(self):
         if(self.CheckLoad()):
+            # 这里进行数据的删除
+            # self.mainWindow.userNameList.row()
             self.mainWindow
             self.CheckCount = False
             self.accept()

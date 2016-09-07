@@ -34,6 +34,9 @@
          <property name="text">
           <string>用户名</string>
          </property>
+         <property name="buddy">
+          <cstring>userNameList</cstring>
+         </property>
         </widget>
        </item>
        <item>
@@ -127,7 +130,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDasd">
@@ -299,5 +302,58 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>userNameList</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clickedTheUserNameListItem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>168</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>userPasswordList</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clickedThePasswordListItem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>389</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>381</x>
+     <y>555</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>userRemarkList</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clickedTheRemarkListItem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>556</x>
+     <y>495</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>522</x>
+     <y>546</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>clickedTheUserNameListItem()</slot>
+  <slot>clickedThePasswordListItem()</slot>
+  <slot>clickedTheRemarkListItem()</slot>
+ </slots>
 </ui>
