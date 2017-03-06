@@ -176,10 +176,13 @@ class Grammer(object):
                 # 1、（分）将字符串分成不同的小块进行分析（治）,得到此部分的方法
                 # (此处思想是二维的动归,rep表示的是此时跨过多少个字符串)
 
-                nonTRule[(start,start+rep)] = self.genRuleMatches(passwd[start:start+rep+1])
-
+                # nonTRule[(start,start+rep)] = self.genRuleMatches(passwd[start:start+rep+1])
+                non = self.genRuleMatches(passwd[start:start+rep+1])
+                if first:
+                    print(non)
+                    first = False
                 rule_list = []
-                rule_list.append(nonTRule[(start, start + rep)])
+                rule_list.append(non)
 
                 # 2、（合）分析各个部分的小块的发生概率，分别记录下来
                 for bet in range(start,start+rep):
@@ -199,12 +202,16 @@ class Grammer(object):
                     nonTRule[(start,start+rep)] = ()
                 
                 
+        print("in the pares it print ",end = '')
+        print(nonTRule[(0,len(passwd) -1)])
         return nonTRule[(0,len(passwd) -1)]
 
     # 简单解析函数，将简单规则的密码进行加密（这个简单规则是指类似于123456）或者无法解释的内容
     def defaultPasswordParse(self,word):
         # 将所有的密码格式设置成G -> W1,G | D1,G | Y1,G | W1 | D1 | Y1的形式
         pt = ParseTree()
+        print("default password parse is ",end = '')
+        print(pt)
         n = len(word)
         for i,c in enumerate(word):
             r = whatchar(c) + '1'

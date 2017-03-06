@@ -21,7 +21,8 @@ class MainWindow(QMainWindow, ui_MainWindow.Ui_MainWindow):
         self.row = 0
 
         # 这里要在数据库中尝试读入数据，然后检查是否有可以添加的部分
-        table_name_list = self.sqlHandle.query(table_name)
+        table_name_list = self.sqlHandle.query_all(table_name)
+        print('there are %d user in table'%len(table_name_list))
 
         for name,passwd,remark in table_name_list:
             self.userNameList.addItem(name)

@@ -47,7 +47,6 @@ class PcfgEncode(object):
     def DTE_AES_encode(self, passwd, mode=AES.MODE_ECB):
         """
         用于对用户密码进行aes加密的函数。
-        
         如果使用定长的加密模式，我们会在passwd最后添加！作为结尾符，再在最后添加0，填充满16的倍数
         :Parameters:
         @param passwd：用于加密的函数
@@ -57,7 +56,7 @@ class PcfgEncode(object):
         iv = Random.new().read(AES.block_size)
 
         if mode == AES.MODE_CBC:
-            crypto = AES.new(self.key, mode, iv)    
+            crypto = AES.new(self.key, mode, iv)
         elif mode == AES.MODE_ECB:
             crypto = AES.new(self.key, mode)
         else:
@@ -71,7 +70,7 @@ class PcfgEncode(object):
             passwd = passwd + b"!" + bytes((16-x-1)*'0', 'utf-8')
             # print(len(passwd))
             de = crypto.encrypt(passwd)
-            
+
         return de
 
     def DTE_AES_decode(self, passwd, mode=AES.MODE_ECB):
@@ -80,7 +79,7 @@ class PcfgEncode(object):
         :Parameters:
         @param passwd：密文
         @param mode = AES.MODE_CBC：加密的模式
-        :Return: 一个解密后的字符串    
+        :Return: 一个解密后的字符串
         """
         iv = Random.new().read(AES.block_size)
 
@@ -88,8 +87,8 @@ class PcfgEncode(object):
 
             crypto = AES.new(self.key, mode, iv)
             de = crypto.decrypt(passwd)
-            
-            # return a2b_hex(d) 
+
+            # return a2b_hex(d)
         elif mode == AES.MODE_ECB:
             crypto = AES.new(self.key, mode)
             de = crypto.decrypt(passwd)
@@ -109,14 +108,14 @@ class PcfgEncode(object):
         一个list，里面放了32个加密后的bytes串
         如果发生错误，会返回一个空的列表
         """
-        if len(password)>32 or len(password)<=5:
+        if len(password) >32 or len(password) <=5:
             print("password length is %d"%len(password))
             return []
         self.key = self.key.zfill(32)
         # print("in the pcfg_encode,the password is "+password)
-        # 对密码进行pcfg混淆        
+        # 对密码进行pcfg混淆
         temp_list= self.g.encode_password(password)
-        # print(temp_list)
+        print(temp_list)
         # 然后对整个list进行处理
         encode_list = [self.encode(x) for x in temp_list]
         # print(encode_list)
@@ -146,6 +145,6 @@ if __name__ == '__main__':
 
     key = '1234567890abcdef'
     g = PcfgEncode(key)
-    t = g.pcfg_encode('password')
+    t = g.pcfg_encode('wyz123123')
     g = PcfgEncode('1234567890bbcdef')
     print(g.pcfg_decode(t))

@@ -52,14 +52,20 @@ class SqlHandle(object):
 # 查找
     def query(self, username):
         self.cursor = self.pw_db.cursor()
-        self.table_name = username
+        # self.table_name = username
         # 检查当前表是否存在
         try:
-        	self.cursor.execute('SELECT * FROM %s WHERE username = ?' %self.table_name, \
-            	 (username,))
-        	temp = self.cursor.fetchall() 
-        	# print(temp)
-        	de_temp = [(name,self.pcfg.pcfg_decode(x.split(b'  ')),remark) for (name,x,remark) in temp]
+            self.cursor.execute('SELECT * FROM %s WHERE username = ?' %self.table_name, \
+                 (username,))
+            temp = self.cursor.fetchall()
+            # print("in the query the fetchall get")
+            # print(temp)
+            # de_temp = [(name,self.pcfg.pcfg_decode(x.split(b'  ')),remark) for (name,x,remark) in temp]
+            de_temp = []
+            for name,x,remark in temp:
+                x = self.pcfg.pcfg_decode(x.split(b'  '))
+                # print('the %s password is %s'%(name,x))
+                de_temp.append((name,x,remark))
 
         except sqlite3.OperationalError as ope:
         	print("have no sqlite!")
@@ -69,21 +75,43 @@ class SqlHandle(object):
 
         return de_temp
 
+# 全部读取
+    def query_all(self, username):
+        self.cursor = self.pw_db.cursor()
+        self.table_name = username
+        # 检查当前表是否存在
+        try:
+            self.cursor.execute('SELECT * FROM %s ' %self.table_name)
+            temp = self.cursor.fetchall()
+            # print("in the query the fetchall get")
+            print(temp)
+            de_temp = [(name,self.pcfg.pcfg_decode(x.split(b'  ')),remark) for (name,x,remark) in temp]
+
+        except sqlite3.OperationalError as ope:
+            print("have no sqlite!")
+            de_temp = []
+            self.cursor.close()
+            self.pw_db.commit()
+
+        return de_temp
+
 # 插入	
     def insert(self, username, password, remarks):
         self.cursor = self.pw_db.cursor() 
-        print("in the insert ,the password is " + password)
+        # print("in the insert ,the password is " + password)
         en_password_list = self.pcfg.pcfg_encode(password)
-        print(en_password_list)
+        # print(en_password_list)
         if not en_password_list:
         	print("can not encode ,please change the key")
         	return
         # 这里使用特殊的做法：把数据流用'  '作为分隔符，合并到一个二进制串中
 
+        print("in the insert")
         encode_password = b'  '.join(en_password_list)
         self.cursor.execute(\
             'INSERT INTO %s (username, password, remarks) VALUES (?, ?, ?) ' %self.table_name,\
             (username, encode_password, remarks))
+        # print("insert the %s success"%username)
         self.cursor.close()
         self.pw_db.commit()
 
@@ -105,11 +133,11 @@ class SqlHandle(object):
         self.pw_db.close()
         
 
-if __name__ == '__main__':
-	test = 	SqlHandle('user_data.db')
-	test.insert('caicai','123456')
-	print(test.query('caicai'))
-	test.close()
+# if __name__ == '__main__':
+# 	test = 	SqlHandle('user_data.db')
+# 	test.insert('caicai','123456')
+# 	print(test.query('caicai'))
+# 	test.close()
 #额  记录一下错误没关系吧
 ##python在用sqlite3时一定要及得提交事务在即
     # cursor.close()

@@ -121,15 +121,6 @@ class NonT_W(NonT):
     english_dawg = IntDAWG().load(GRAMMAR_PATH + 'words.dawg')
     chinese_dawg = IntDAWG().load(GRAMMAR_PATH + 'pinyin.dawg')
     total_f = english_dawg[u"__total__"] + chinese_dawg[u'__total__']
-    # thisdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # word_dawg  = IntDAWG().load('{}/data/English_30000.dawg'.format(thisdir))
-    # fname_dawg = IntDAWG().load(
-    #     '{}/data/facebook-firstnames-withcount.dawg'.format(thisdir))
-    # lname_dawg = IntDAWG().load(
-    #     '{}/data/facebook-lastnames-withcount.dawg'.format(thisdir))
-    # total_f = word_dawg[u'__total__'] + \
-    #     fname_dawg[u'__total__'] + \
-    #     lname_dawg[u'__total__']
     l33t_replaces = DAWG.compile_replaces({
             '3': 'e', '4': 'a', '@': 'a',
             '$': 's', '0': 'o', '1': 'i',
@@ -164,16 +155,6 @@ class NonT_W(NonT):
             self.L = NonT_L(v, word)    # 引入NonT_L 分析password的大小写情况
             # print(self.L)
             self.prob = self.L.prob * float(f)/self.total_f # 添加特殊字符对概率的影响
-    # def parse_tree(self):
-    #     pt = ParseTree()
-    #     pt.add_rule((self.sym, self.prod))
-    #     pt.extend_rules(self.L.parse_tree())
-    #     return pt
-    # def rule_set(self):
-    #     rs = RuleSet()
-    #     rs.add_rule(self.sym, self.prod)
-    #     rs.update_set(self.L.rule_set())
-    #     return rs
 
     def parse_tree(self):
         pt = ParseTree()
@@ -301,17 +282,17 @@ G：组合类，将之前的规则进行组合
 G -> <some-combination-of-those-NonTs>
 """
 
-"""
-函数：得到NonT（规则节点）
-功能：找出passwd在我们定义的可能的方法类中最可能的一类
-参数定义：
-rule_list list:定义了需要进行分析的代码段
-返回值：
-某个NonT_类
-"""
 
 
 def getGenNonT(passwd):
+    """
+    函数：得到NonT（规则节点）
+    功能：找出passwd在我们定义的可能的方法类中最可能的一类
+    参数定义：
+    rule_list list:定义了需要进行分析的代码段
+    返回值：
+    某个NonT_类
+    """
 
     # 检查一下传入的参数免得爆炸
     if not passwd:
@@ -334,19 +315,18 @@ def getGenNonT(passwd):
 
     return maxNonT
 
-"""
-函数：解析字符串（概率）
-功能：将一串输入的字符串解析成一个概率最高的规则型式
-参数定义：
-nonTRule dict ：记录下从第start到第end的规则（可能为NontC也可能为其他）
-rule_list list: 临时变量，记录下从第start到第start+rep之间可能的所有规则
-start int：记录下此时的变量起点
-rep int：记录下此时的变量重点
-返回值：返回一个NonT_C的节点，表示开头（？）
-"""
-
 
 def parse(passwd):
+    """
+    函数：解析字符串（概率）
+    功能：将一串输入的字符串解析成一个概率最高的规则型式
+    参数定义：
+    nonTRule dict ：记录下从第start到第end的规则（可能为NontC也可能为其他）
+    rule_list list: 临时变量，记录下从第start到第start+rep之间可能的所有规则
+    start int：记录下此时的变量起点
+    rep int：记录下此时的变量重点
+    返回值：返回一个NonT_C的节点，表示开头（？）
+    """
 
     # 首先检验读入的字符串不是空字符串
     if not passwd:
@@ -359,7 +339,7 @@ def parse(passwd):
     # 然后是对读入的字符串进行分析
     # 使用它的算法：先算每一个叫部分的规则，然后组合起来（有点像。。。。那个。。分治的思想）
     index = 0
-    # first = True
+    first = True
     for rep in range(len(passwd)):
         for start in range(len(passwd) - rep):
             index += 1
@@ -367,7 +347,9 @@ def parse(passwd):
             # (此处思想是二维的动归,rep表示的是此时跨过多少个字符串)
 
             non = getGenNonT(passwd[start:start+rep+1])
-
+            if first:
+                    print(non)
+                    first = False
             rule_list = []
             rule_list.append(non)
 
@@ -390,16 +372,16 @@ def parse(passwd):
     # 在完成所有的分析后，最后再把这个节点包装（？）
     return NonT_C(nonTRule[(0, len(passwd) -1)])
 
-"""
-函数：pcfg训练函数
-功能：将
-参数定义：
-filename :用于存放训练集的位置
-rule_set：存放规则以及其频率的类
-"""
 
 
 def buildOurpcfg(filename):
+    """
+    函数：pcfg训练函数
+    功能：将
+    参数定义：
+    filename :用于存放训练集的位置
+    rule_set：存放规则以及其频率的类
+    """
 
     # 准备好用于存放规则的类
     rule_set = RuleSet()
@@ -408,7 +390,7 @@ def buildOurpcfg(filename):
     fp = open(filename, 'r')
 
     # 设定最大的可读取行数
-    max_line = 25550
+    max_line = 2555000
 
     for i, line in enumerate(fp):
         if i > max_line:
@@ -426,9 +408,8 @@ def buildOurpcfg(filename):
 
     rule_set.save(bz2.BZ2File("temp1.cfg","wb"))
 
-    buildOurpcfg("password_12306.cfg")
 
 
 if __name__ == "__main__":
-
-    print(parse("passabcd"))
+    print(parse("wyz123123"))    
+#    buildOurpcfg("../Grammar/password_12306.cfg")

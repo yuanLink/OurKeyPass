@@ -33,8 +33,7 @@ class UserLoginDialog(QDialog, ui_UserLoginDialog.Ui_L):
         self.close()
 
     def updateUi(self):
-        """
-        判断是否输入为空
+        """判断是否输入为空
         :return:
         """
         enable = (not self.userNameLogin.text() == '') and (not
